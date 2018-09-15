@@ -1,7 +1,11 @@
 import React from 'react';
 //import './style/index.css';
 
+import Selects from './Selects';
+
 import Panel  from 'react-bootstrap/lib/Panel';
+import Well  from 'react-bootstrap/lib/Well';
+import Nav  from 'react-bootstrap/lib/Panel';
 import Button  from 'react-bootstrap/lib/Button';
 
 import crossX from '../img/X.png';
@@ -18,8 +22,8 @@ class Board extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            width: 5,
-            height: 5,
+            width: 4,
+            height: 4,
             strike: 3,
             needCombo: 4,
             info: "welcome"
@@ -133,14 +137,18 @@ class Board extends React.Component {
         return (
             <Panel bsStyle="primary" id="board">
                 <Panel.Heading>
-                    <Panel.Title componentClass="h3">{this.state.info}</Panel.Title>
+                    <Panel.Title componentClass="h3">{this.state.info}</Panel.Title> <br/>
+                    <div>
+                        <Selects name="Width"/>
+                        <Selects name="Height"/>
+                        <Selects name="Combo"/>
+                    </div>
                 </Panel.Heading>
-                <div id="field">
+                <Panel.Body id="field">
                     <div id="ticBoard">
                         {this.drawSquares()}
                     </div>
-                </div>
-
+                </Panel.Body>
             </Panel>
         )
     }

@@ -39,5 +39,22 @@
     padding-left: 5%;
     padding-top: 2%;
     weight:90%;
-    height:90%
+    height:90%;
 }
+
+#panelBody {
+    background-color: #acd1db;
+}
+
+#choose {
+    color: red;
+}
+
+select {
+    background-color: #5e8a2f;
+}
+
+.classSelect {
+    display: inline-block
+}
+
