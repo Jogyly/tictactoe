@@ -131,15 +131,17 @@ class Board extends React.Component {
 
     render() {
         return (
-            <div id="board">
-                <div id="info">{this.state.info}</div>
+            <Panel bsStyle="primary" id="board">
+                <Panel.Heading>
+                    <Panel.Title componentClass="h3">{this.state.info}</Panel.Title>
+                </Panel.Heading>
                 <div id="field">
-                    <div id="board">
+                    <div id="ticBoard">
                         {this.drawSquares()}
                     </div>
                 </div>
 
-            </div>
+            </Panel>
         )
     }
 }
@@ -170,9 +172,9 @@ class Square extends React.Component {
 
     render() {
         return (
-            <div id={this.props.index} className="square" onClick={this.state.onClick}>
+            <button id={this.props.index} className="square" onClick={this.state.onClick}>
                 <img src={this.state.value} />
-            </div>
+            </button>
         )
     }
 }
