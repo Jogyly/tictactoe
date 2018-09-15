@@ -1,4 +1,6 @@
 import React from 'react';
+import Board from './Board';
+import Chat from './Chat';
 
 class Game extends React.Component {
     render() {
