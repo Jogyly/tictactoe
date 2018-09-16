@@ -22,12 +22,18 @@ class Board extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            width: 4,
+            width: this.props.width,
             height: 4,
             strike: 3,
             needCombo: 4,
             info: "welcome"
-        }
+        };
+
+        this.widthRef = React.createRef();
+        this.heightRef = React.createRef();
+        this.comboRef = React.createRef();
+
+        this.allSquares = React.createRef();
 
         for(let i = 0; i < 6; i++){
             let boardRow = [];
@@ -124,6 +130,7 @@ class Board extends React.Component {
                         index={index}
                         key={index}
                         choose={(elementID) => this.choose(elementID)}
+                        ref={this.allSquares}
                     />
                 );
             }
@@ -133,16 +140,22 @@ class Board extends React.Component {
     }
 
 
+    updateValue(value) {
+        console.log(value);
+    }
+
     render() {
         return (
             <Panel bsStyle="primary" id="board">
                 <Panel.Heading>
                     <Panel.Title componentClass="h3">{this.state.info}</Panel.Title> <br/>
                     <div>
-                        <Selects name="Width"/>
+                        <Selects name="Width" updateValue={(value) => this.updateValue(value)}/>
                         <Selects name="Height"/>
                         <Selects name="Combo"/>
                     </div>
+                    <br/>
+                    <Button bsStyle="success" id="restart" onClick={() => this.props.restart()}>Restart</Button>
                 </Panel.Heading>
                 <Panel.Body id="field">
                     <div id="ticBoard">

@@ -6,6 +6,19 @@ const maxSize = 10;
 class Selects extends React.Component {
     constructor(props) {
         super(props);
+
+        this.state = {
+            onChange: function(e) {
+                var options = e.target.options;
+                var value = [];
+                for (var i = 0, l = options.length; i < l; i++) {
+                    if (options[i].selected) {
+                        value = options[i].value;
+                    }
+                }
+                this.props.updateValue(value);
+            }
+    }
     }
 
     selects() {
@@ -16,11 +29,14 @@ class Selects extends React.Component {
         return selectsArray;
     }
 
+
+
+
     render (){
         return (
             <div className="classSelect">
                 {this.props.name}:
-                <select default='3'>
+                <select default='3' onChange={this.state.onChange}>
                     {this.selects()}
                 </select>
             </div>
