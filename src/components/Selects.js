@@ -3,36 +3,41 @@ import ReactDOM from 'react-dom';
 
 const maxSize = 10;
 
-// I need this variable cause GC kills my props and states
+// I need this variables cause GC kills my props and states
 let prop;
+let name;
 
 class Selects extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-        }
+        };
 
         prop = this.props;
+        name = this.props.name;
     }
 
 
     onChange(event) {
-        var options = event.target.options;
-        var value = [];
-        for (var i = 0, l = options.length; i < l; i++) {
+        let options = event.target.options;
+        let value = [];
+        let nameValue;
+
+        for (let i = 0, l = options.length; i < l; i++) {
             if (options[i].selected) {
                 value = options[i].value;
+                nameValue = options[i].className;
             }
         }
 
-        prop.onClick(value);
+        prop.onClick(nameValue, value);
     }
 
     selects() {
         let selectsArray = [];
         for (let i = 3; i <= maxSize; i++){
-            selectsArray.push(<Select number={i}/>)
+            selectsArray.push(<Select number={i} class={this.props.name}/>)
         }
         return selectsArray;
     }
@@ -41,7 +46,8 @@ class Selects extends React.Component {
         return (
             <div className="classSelect">
                 {this.props.name}:
-                <select default='3' onChange={this.onChange} >
+                <select onChange={this.onChange} >
+                    <option>{this.props.value}</option>
                     {this.selects()}
                 </select>
             </div>
@@ -55,7 +61,7 @@ class Select extends React.Component {
     }
     render() {
         return (
-            <option value={this.props.number}>{this.props.number}</option>
+            <option value={this.props.number} class={this.props.class}>{this.props.number}</option>
         )
     }
 }

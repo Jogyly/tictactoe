@@ -17,44 +17,36 @@ let player = 1;
 let info = "Welcome";
 let boardArray = [];
 
-// I need this variable cause GC kills my props and states
-let prop;
-
 class Board extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
             width: this.props.width,
-            height: 4,
-            strike: 3,
-            needCombo: 4,
+            height: this.props.height,
+            combo: this.props.combo,
             info: "welcome"
         };
 
-        this.widthRef = React.createRef();
-        this.heightRef = React.createRef();
-        this.comboRef = React.createRef();
+        this.disableSquares = React.createRef();
 
         this.allSquares = React.createRef();
 
-        for(let i = 0; i < 6; i++){
+        for(let i = 0; i < this.state.height; i++){
             let boardRow = [];
 
-            for(let j = 0; j < 6; j++){
+            for(let j = 0; j < this.state.width; j++){
                 boardRow[j] = 0;
             }
 
             boardArray[i] = boardRow;
         }
-
-        prop = this.props;
     }
 
     isItWin(elementID) {
         const [ i, j ] = elementID.slice();
         boardArray[i][j] = player;
-        let needCombo = this.state.needCombo;
+        let needCombo = this.state.combo;
 
         for (let n = -1; n < 2; n++) {
             for (let m = -1; m < 2; m++) {
@@ -91,7 +83,7 @@ class Board extends React.Component {
                             counter = 1;
                         }
                     }
-                    while (needContinue)
+                    while (needContinue);
 
                     if (combo >= needCombo) {
                         return true;
@@ -107,15 +99,16 @@ class Board extends React.Component {
     choose(elementID) {
 
         if (this.isItWin(elementID)){
-            this.setState({info: `Player ${player} win!` })
+            this.setState({info: `Player ${player} win!` });
+            this.disableSquares.current.disable;
         }
         else {
 
             if (player == 1) {
-                this.setState({info: "Player 1"})
+                this.setState({info: "Player 2"})
             }
             else {
-                this.setState({info: "Player 2"})
+                this.setState({info: "Player 1"})
             }
         }
     }
@@ -126,16 +119,16 @@ class Board extends React.Component {
 
         let someVar = [];
 
-        for (let i = 0; i < width; i++) {
+        for (let i = 0; i < height; i++) {
             result.push(<br key={"br" + i}/>);
-            for (let j = 0; j < height; j++) {
+            for (let j = 0; j < width; j++) {
                 let index = i + "" + j;
                 result.push(
                     <Square
                         index={index}
                         key={index}
                         choose={(elementID) => this.choose(elementID)}
-                        ref={this.allSquares}
+                        ref={this.disableSquares}
                     />
                 );
             }
@@ -155,9 +148,9 @@ class Board extends React.Component {
                 <Panel.Heading>
                     <Panel.Title componentClass="h3">{this.state.info}</Panel.Title> <br/>
                     <div>
-                        <Selects name="Width" onClick={(value) => this.updateValue("width", value)}/>
-                        <Selects name="Height" onClick={(value) => this.updateValue("height", value)}/>
-                        <Selects name="Combo" onClick={(value) => this.updateValue("combo", value)}/>
+                        <Selects name="Width" value={this.state.width} onClick={(nameValue, value) => this.updateValue(nameValue, value)}/>
+                        <Selects name="Height" value={this.state.height} onClick={(nameValue, value) => this.updateValue(nameValue, value)}/>
+                        <Selects name="Combo" value={this.state.combo} onClick={(nameValue, value) => this.updateValue(nameValue, value)}/>
                     </div>
                     <br/>
                     <Button bsStyle="success" id="restart" onClick={() => this.props.restart()}>Restart</Button>
@@ -178,8 +171,14 @@ class Square extends React.Component {
         this.state = {
             value : nothing_,
             onClick: () => this.chooseThisSquare()
-        }
+        };
+
+        this.disableSquares = () => this.setState({onClick: ""});
     }
+
+    //disableSquares() {
+    //    this.setState({onClick: ""});
+    //}
 
     chooseThisSquare(){
         this.setState({onClick: ""});

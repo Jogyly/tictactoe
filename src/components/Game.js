@@ -8,7 +8,7 @@ class Game extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            width: 3,
+            width: 4,
             height: 3,
             combo: 3,
             key: Math.random()
