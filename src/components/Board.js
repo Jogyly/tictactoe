@@ -1,17 +1,13 @@
 import React from 'react';
-//import './style/index.css';
 
 import Selects from './Selects';
 
 import Panel  from 'react-bootstrap/lib/Panel';
-import Well  from 'react-bootstrap/lib/Well';
-import Nav  from 'react-bootstrap/lib/Panel';
 import Button  from 'react-bootstrap/lib/Button';
 
 import crossX from '../img/X.png';
 import circleO from '../img/O.png';
 import nothing_ from '../img/_.png';
-
 
 let player = 1;
 let info = "Welcome";
@@ -25,12 +21,8 @@ class Board extends React.Component {
             width: this.props.width,
             height: this.props.height,
             combo: this.props.combo,
-            info: "welcome"
+            info: info
         };
-
-        this.disableSquares = React.createRef();
-
-        this.allSquares = React.createRef();
 
         for(let i = 0; i < this.state.height; i++){
             let boardRow = [];
@@ -54,7 +46,7 @@ class Board extends React.Component {
                 let j_m = +j + m;
                 let combo = 0;
 
-                if ((n == 0 && m == 0)){// || (i_n < 0 || j_m < 0)){
+                if ((n == 0 && m == 0)){
                     continue;
                 }
 
@@ -100,7 +92,6 @@ class Board extends React.Component {
 
         if (this.isItWin(elementID)){
             this.setState({info: `Player ${player} win!` });
-            this.disableSquares.current.disable;
         }
         else {
 
@@ -128,7 +119,6 @@ class Board extends React.Component {
                         index={index}
                         key={index}
                         choose={(elementID) => this.choose(elementID)}
-                        ref={this.disableSquares}
                     />
                 );
             }
@@ -172,13 +162,7 @@ class Square extends React.Component {
             value : nothing_,
             onClick: () => this.chooseThisSquare()
         };
-
-        this.disableSquares = () => this.setState({onClick: ""});
     }
-
-    //disableSquares() {
-    //    this.setState({onClick: ""});
-    //}
 
     chooseThisSquare(){
         this.setState({onClick: ""});

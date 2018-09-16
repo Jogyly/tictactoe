@@ -8,9 +8,9 @@ class Game extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            width: 4,
-            height: 3,
-            combo: 3,
+            width: 6,
+            height: 6,
+            combo: 4,
             key: Math.random()
         };
 }
@@ -44,12 +44,11 @@ class Game extends React.Component {
         return (
             <div id="game">
                 <Panel bsStyle="primary">
-                    <Panel.Heading>
-                        Wow
+                    <Panel.Heading id="head">
+                        TicTacToe
                     </Panel.Heading>
                     <Panel.Body id="panelBody">
                         <Board key={this.state.key} width={this.state.width} height={this.state.height} combo={this.state.combo} restart={() => this.restart() } updateValue={(nameValue, value) => this.updateValue(nameValue, value)}/>
-                        <Chat />
                     </Panel.Body>
                 </Panel>
             </div>
