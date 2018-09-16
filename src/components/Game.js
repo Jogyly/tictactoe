@@ -14,13 +14,30 @@ class Game extends React.Component {
             key: Math.random()
         };
 }
-    restart(width, height, combo) {
+    restart() {
         this.setState({
-            width: width,
-            height: height,
-            combo: combo,
             key: Math.random()
         });
+    }
+
+    updateValue(nameValue, value) {
+        if (nameValue == 'Width') {
+            this.setState({
+                width: value,
+                key: Math.random()
+            })
+        }
+        else if (nameValue == 'Height') {
+            this.setState({
+                height: value,
+                key: Math.random()
+            })
+        }
+        else
+            this.setState({
+                combo: value,
+                key: Math.random()
+            })
     }
 
     render() {
@@ -31,7 +48,7 @@ class Game extends React.Component {
                         Wow
                     </Panel.Heading>
                     <Panel.Body id="panelBody">
-                        <Board key={this.state.key} width={this.state.width} height={this.state.height} combo={this.state.combo} restart={(width, height, combo) => this.restart(width, height, combo)}/>
+                        <Board key={this.state.key} width={this.state.width} height={this.state.height} combo={this.state.combo} restart={() => this.restart() } updateValue={(nameValue, value) => this.updateValue(nameValue, value)}/>
                         <Chat />
                     </Panel.Body>
                 </Panel>

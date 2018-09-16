@@ -17,6 +17,9 @@ let player = 1;
 let info = "Welcome";
 let boardArray = [];
 
+// I need this variable cause GC kills my props and states
+let prop;
+
 class Board extends React.Component {
 
     constructor(props) {
@@ -44,6 +47,8 @@ class Board extends React.Component {
 
             boardArray[i] = boardRow;
         }
+
+        prop = this.props;
     }
 
     isItWin(elementID) {
@@ -140,8 +145,8 @@ class Board extends React.Component {
     }
 
 
-    updateValue(value) {
-        console.log(value);
+    updateValue(nameValue, value) {
+        this.props.updateValue(nameValue, value);
     }
 
     render() {
@@ -150,9 +155,9 @@ class Board extends React.Component {
                 <Panel.Heading>
                     <Panel.Title componentClass="h3">{this.state.info}</Panel.Title> <br/>
                     <div>
-                        <Selects name="Width" updateValue={(value) => this.updateValue(value)}/>
-                        <Selects name="Height"/>
-                        <Selects name="Combo"/>
+                        <Selects name="Width" onClick={(value) => this.updateValue("width", value)}/>
+                        <Selects name="Height" onClick={(value) => this.updateValue("height", value)}/>
+                        <Selects name="Combo" onClick={(value) => this.updateValue("combo", value)}/>
                     </div>
                     <br/>
                     <Button bsStyle="success" id="restart" onClick={() => this.props.restart()}>Restart</Button>

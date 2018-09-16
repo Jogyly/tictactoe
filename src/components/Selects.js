@@ -3,22 +3,30 @@ import ReactDOM from 'react-dom';
 
 const maxSize = 10;
 
+// I need this variable cause GC kills my props and states
+let prop;
+
 class Selects extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            onChange: function(e) {
-                var options = e.target.options;
-                var value = [];
-                for (var i = 0, l = options.length; i < l; i++) {
-                    if (options[i].selected) {
-                        value = options[i].value;
-                    }
-                }
-                this.props.updateValue(value);
-            }
+        }
+
+        prop = this.props;
     }
+
+
+    onChange(event) {
+        var options = event.target.options;
+        var value = [];
+        for (var i = 0, l = options.length; i < l; i++) {
+            if (options[i].selected) {
+                value = options[i].value;
+            }
+        }
+
+        prop.onClick(value);
     }
 
     selects() {
@@ -29,14 +37,11 @@ class Selects extends React.Component {
         return selectsArray;
     }
 
-
-
-
     render (){
         return (
             <div className="classSelect">
                 {this.props.name}:
-                <select default='3' onChange={this.state.onChange}>
+                <select default='3' onChange={this.onChange} >
                     {this.selects()}
                 </select>
             </div>
